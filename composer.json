@@ -1,0 +1,38 @@
+{
+    "name": "antalaron/oauth2-disqus",
+    "description": "Disqus OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antal Áron",
+            "email": "antalaron@antalaron.hu"
+        }
+    ],
+    "keywords": [
+        "oauth",
+        "oauth2",
+        "client",
+        "authorization",
+        "authorisation",
+        "disqus"
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "league/oauth2-client": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Antalaron\\DisqusOAuth2\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Antalaron\\DisqusOAuth2\\Test\\": "test/src/"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+name: Code style
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron:  '30 5 1,15 * *'
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: PHP-CS-Fixer
+        uses: docker://oskarstark/php-cs-fixer-ga:3.11.0
+        with:
+          args: --diff --dry-run -vvv
