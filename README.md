@@ -1,5 +1,7 @@
 # Disqus Provider for OAuth 2.0 Client
 
+[![CI](https://github.com/antalaron/oauth2-disqus/actions/workflows/ci.yaml/badge.svg)](https://github.com/antalaron/oauth2-disqus/actions/workflows/ci.yaml)
+
 This package provides Disqus OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
@@ -24,7 +26,6 @@ $provider = new Antalaron\DisqusOAuth2\Disqus([
 ]);
 
 if (!isset($_GET['code'])) {
-
     // If we don't have an authorization code then get one
     $authUrl = $provider->getAuthorizationUrl();
     $_SESSION['oauth2state'] = $provider->getState();
@@ -33,12 +34,9 @@ if (!isset($_GET['code'])) {
 
 // Check given state against previously stored one to mitigate CSRF attack
 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
-
     unset($_SESSION['oauth2state']);
     exit('Invalid state');
-
 } else {
-
     // Try to get an access token (using the authorization code grant)
     $token = $provider->getAccessToken('authorization_code', [
         'code' => $_GET['code']
@@ -46,15 +44,12 @@ if (!isset($_GET['code'])) {
 
     // Optional: Now you have a token you can look up a users profile data
     try {
-
         // We got an access token, let's now get the user's details
         $user = $provider->getResourceOwner($token);
 
         // Use these details to create a new profile
         printf('Hello %s!', $user->getName());
-
     } catch (Exception $e) {
-
         // Failed to get user details
         exit('Oh dear...');
     }
