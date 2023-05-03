@@ -11,6 +11,7 @@
 
 namespace League\OAuth2\Client\Test\Provider;
 
+use Antalaron\DisqusOAuth2\DisqusResourceOwner;
 use GuzzleHttp\Psr7\Stream;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
@@ -23,22 +24,21 @@ class DisqusTest extends TestCase
 {
     use QueryBuilderTrait;
 
-    protected $provider;
+    protected ?\Antalaron\DisqusOAuth2\Disqus $provider;
 
     protected function setUp(): void
     {
-        $this->provider = new \Antalaron\DisqusOAuth2\Disqus(
-            [
+        $this->provider = new \Antalaron\DisqusOAuth2\Disqus([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',
-            ]
-        );
+        ]);
     }
 
     protected function tearDown(): void
     {
         \Mockery::close();
+
         parent::tearDown();
     }
 
@@ -88,6 +88,7 @@ class DisqusTest extends TestCase
 
     public function testGetAccessToken(): void
     {
+        /** @var \Psr\Http\Message\ResponseInterface&\Mockery\MockInterface */
         $response = \Mockery::mock('Psr\Http\Message\ResponseInterface');
         $response->shouldReceive('getBody')
             ->andReturn(new Stream(fopen(sprintf('data://text/plain,%s', '{"access_token":"mock_access_token", "scope":"repo,gist", "token_type":"bearer"}'), 'r')))
@@ -99,6 +100,7 @@ class DisqusTest extends TestCase
             ->andReturn(200)
         ;
 
+        /** @var \GuzzleHttp\ClientInterface&\Mockery\MockInterface */
         $client = \Mockery::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')->times(1)->andReturn($response);
         $this->provider->setHttpClient($client);
@@ -117,6 +119,7 @@ class DisqusTest extends TestCase
         $name = uniqid();
         $username = uniqid();
 
+        /** @var \Psr\Http\Message\ResponseInterface&\Mockery\MockInterface */
         $postResponse = \Mockery::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')
             ->andReturn(new Stream(fopen(sprintf('data://text/plain,%s', http_build_query([
@@ -132,6 +135,7 @@ class DisqusTest extends TestCase
             ->andReturn(200)
         ;
 
+        /** @var \Psr\Http\Message\ResponseInterface&\Mockery\MockInterface */
         $userResponse = \Mockery::mock('Psr\Http\Message\ResponseInterface');
         $userResponse->shouldReceive('getBody')
             ->andReturn(new Stream(fopen(sprintf('data://text/plain,%s', json_encode([
@@ -149,6 +153,7 @@ class DisqusTest extends TestCase
             ->andReturn(200)
         ;
 
+        /** @var \GuzzleHttp\ClientInterface&\Mockery\MockInterface */
         $client = \Mockery::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(2)
@@ -157,8 +162,11 @@ class DisqusTest extends TestCase
         $this->provider->setHttpClient($client);
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+
+        /** @var DisqusResourceOwner */
         $user = $this->provider->getResourceOwner($token);
 
+        $this->assertInstanceOf(DisqusResourceOwner::class, $user);
         $this->assertEquals($userId, $user->getId());
         $this->assertEquals($userId, $user->getId());
         $this->assertEquals($userId, $user->toArray()['response']['id']);
@@ -171,6 +179,8 @@ class DisqusTest extends TestCase
     public function testExceptionThrownWhenErrorObjectReceived(): void
     {
         $status = rand(400, 600);
+
+        /** @var \Psr\Http\Message\ResponseInterface&\Mockery\MockInterface */
         $postResponse = \Mockery::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')
             ->andReturn(new Stream(fopen(sprintf('data://text/plain,%s', json_encode([
@@ -187,6 +197,7 @@ class DisqusTest extends TestCase
             ->andReturn($status)
         ;
 
+        /** @var \GuzzleHttp\ClientInterface&\Mockery\MockInterface */
         $client = \Mockery::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(1)
@@ -202,6 +213,8 @@ class DisqusTest extends TestCase
     public function testExceptionThrownWhenOAuthErrorReceived(): void
     {
         $status = 200;
+
+        /** @var \Psr\Http\Message\ResponseInterface&\Mockery\MockInterface */
         $postResponse = \Mockery::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')
             ->andReturn(new Stream(fopen(sprintf('data://text/plain,%s', json_encode([
@@ -211,6 +224,7 @@ class DisqusTest extends TestCase
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $postResponse->shouldReceive('getStatusCode')->andReturn($status);
 
+        /** @var \GuzzleHttp\ClientInterface&\Mockery\MockInterface */
         $client = \Mockery::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(1)
