@@ -1,8 +1,9 @@
 # Disqus Provider for OAuth 2.0 Client
 
 [![CI](https://github.com/antalaron/oauth2-disqus/actions/workflows/ci.yaml/badge.svg)](https://github.com/antalaron/oauth2-disqus/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/antalaron/oauth2-disqus/branch/master/graph/badge.svg?token=TSLA3HO3GY)](https://codecov.io/gh/antalaron/oauth2-disqus)
 
-This package provides Disqus OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
+This package provides [Disqus](https://disqus.com) OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 
