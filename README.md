@@ -14,15 +14,15 @@ composer require antalaron/oauth2-disqus
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\Github` as the provider.
+Usage is the same as The League's OAuth client, using `\Antalaron\DisqusOAuth2\Disqus` as the provider.
 
 ### Authorization Code Flow
 
 ```php
 $provider = new Antalaron\DisqusOAuth2\Disqus([
-    'clientId'          => '{disqus-client-id}',
-    'clientSecret'      => '{disqus-client-secret}',
-    'redirectUri'       => 'https://example.com/callback-url',
+    'clientId' => '{disqus-public-key}',
+    'clientSecret' => '{disqus-secret-key}',
+    'redirectUri' => 'https://example.com/callback-url',
 ]);
 
 if (!isset($_GET['code'])) {
