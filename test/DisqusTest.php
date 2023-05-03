@@ -105,6 +105,7 @@ class DisqusTest extends TestCase
         $client->shouldReceive('send')->times(1)->andReturn($response);
         $this->provider->setHttpClient($client);
 
+        /** @var \League\OAuth2\Client\Token\ResourceOwnerAccessTokenInterface */
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
         $this->assertEquals('mock_access_token', $token->getToken());
@@ -161,6 +162,7 @@ class DisqusTest extends TestCase
         ;
         $this->provider->setHttpClient($client);
 
+        /** @var \League\OAuth2\Client\Token\ResourceOwnerAccessTokenInterface */
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
         /** @var DisqusResourceOwner */
