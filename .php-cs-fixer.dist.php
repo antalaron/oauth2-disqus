@@ -3,7 +3,7 @@
 /*
  * This file is part of Disqus Oaut2 client
  *
- * (c) EDIMA.email Kft. <admin24@edima.hu>
+ * (c) Antal Áron <antalaron@antalaron.hu>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,7 @@
 $header = <<<'EOF'
 This file is part of Disqus Oaut2 client
 
-(c) EDIMA.email Kft. <admin24@edima.hu>
+(c) Antal Áron <antalaron@antalaron.hu>
 
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
