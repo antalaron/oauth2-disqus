@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class DisqusTest extends TestCase
+final class DisqusTest extends TestCase
 {
     use QueryBuilderTrait;
 

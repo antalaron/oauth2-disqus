@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class Disqus extends AbstractProvider
+final class Disqus extends AbstractProvider
 {
     public $domain = 'https://disqus.com';
 
