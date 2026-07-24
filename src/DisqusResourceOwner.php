@@ -17,7 +17,7 @@ use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 /**
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class DisqusResourceOwner implements ResourceOwnerInterface
+final class DisqusResourceOwner implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 

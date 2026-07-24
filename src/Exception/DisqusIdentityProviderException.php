@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class DisqusIdentityProviderException extends IdentityProviderException
+final class DisqusIdentityProviderException extends IdentityProviderException
 {
     /**
      * Creates client exception from response.
